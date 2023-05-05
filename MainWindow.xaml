@@ -1,0 +1,360 @@
+﻿<Window x:Class="BudgetBuilder.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:local="clr-namespace:BudgetBuilder"
+        d:DataContext="{d:DesignInstance Type=local:BankTransaction}"
+        mc:Ignorable="d"
+        Height="{x:Static SystemParameters.PrimaryScreenHeight}"
+        Width="{x:Static SystemParameters.PrimaryScreenWidth}"
+        WindowStartupLocation="CenterScreen"
+        Title="Budget Builder">
+        <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Column="1" Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="2" Width="auto" Height="auto" Background="#272537"/>
+            <Label Grid.Column="0" Width="auto" Height="auto" Background="#272537"/>
+        </Grid>
+        <Label Grid.Column="0" Grid.Row="0" Width="auto" Height="auto" Background="#272537" Content="Budget Builder" Foreground="Honeydew"  FontSize="60" FontStyle="Oblique" FontFamily="Century Gothic"/>
+        <Label Name="DragNDropLabel" Grid.Column="0" Grid.Row="1" Width="auto" Height="auto" Background="White" Content="Drag and drop your pdf here..." FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        <DataGrid x:Name="MyList" AutoGeneratingColumn="DataGrid_AutoGeneratingColumn"  Background="Transparent" Foreground="#272537" IsReadOnly="True" ItemsSource="{Binding Transactions}" Grid.Row="1" Grid.Column="0" Width="600" DragDrop.Drop="MyList_Drop" AllowDrop="true" CanUserSortColumns="True">
+            <DataGrid.CellStyle>
+                <Style TargetType="DataGridCell">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Category}"
+                                 Value="House">
+                            <Setter Property="Background" Value="PaleTurquoise"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Category}"
+                                 Value="Transportation">
+                            <Setter Property="Background" Value="PaleGoldenrod"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Category}"
+                                 Value="Food">
+                            <Setter Property="Background" Value="PaleGreen"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Category}"
+                                 Value="Utilities">
+                            <Setter Property="Background" Value="PaleVioletRed"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Category}"
+                                 Value="Clothing">
+                            <Setter Property="Background" Value="LightCoral"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Category}"
+                                 Value="Medical">
+                            <Setter Property="Background" Value="LightPink"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Category}"
+                                 Value="Insurance">
+                            <Setter Property="Background" Value="LightCyan"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Category}"
+                                 Value="HouseSupplies">
+                            <Setter Property="Background" Value="LightGray"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Category}"
+                                 Value="Personal">
+                            <Setter Property="Background" Value="LightSeaGreen"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Category}"
+                                 Value="Debt">
+                            <Setter Property="Background" Value="LightGoldenrodYellow"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Category}"
+                                 Value="Retirement">
+                            <Setter Property="Background" Value="LightSteelBlue"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Category}"
+                                 Value="Education">
+                            <Setter Property="Background" Value="LightSlateGray"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Category}"
+                                 Value="Savings">
+                            <Setter Property="Background" Value="LightSkyBlue"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Category}"
+                                 Value="Giving">
+                            <Setter Property="Background" Value="LightBlue"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Category}"
+                                 Value="Entertainment">
+                            <Setter Property="Background" Value="LightSalmon"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.CellStyle>
+            <DataGrid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="House"  Click="MenuItem_Click_1" Background="PaleTurquoise"/>
+                    <MenuItem Header="Transportation"  Click="MenuItem_Click_1" Background="PaleGoldenrod"/>
+                    <MenuItem Header="Food"  Click="MenuItem_Click_1" Background="PaleGreen"/>
+                    <MenuItem Header="Utilities"  Click="MenuItem_Click_1" Background="PaleVioletRed"/>
+                    <MenuItem Header="Clothing"  Click="MenuItem_Click_1" Background="LightCoral"/>
+                    <MenuItem Header="Medical"  Click="MenuItem_Click_1" Background="LightPink"/>
+                    <MenuItem Header="Insurance"  Click="MenuItem_Click_1" Background="LightCyan"/>
+                    <MenuItem Header="HouseSupplies"  Click="MenuItem_Click_1" Background="LightGray"/>
+                    <MenuItem Header="Personal"  Click="MenuItem_Click_1" Background="LightSeaGreen"/>
+                    <MenuItem Header="Debt"  Click="MenuItem_Click_1" Background="LightGoldenrodYellow"/>
+                    <MenuItem Header="Retirement"  Click="MenuItem_Click_1" Background="LightSteelBlue"/>
+                    <MenuItem Header="Education"  Click="MenuItem_Click_1" Background="LightSlateGray"/>
+                    <MenuItem Header="Savings"  Click="MenuItem_Click_1" Background="LightSkyBlue"/>
+                    <MenuItem Header="Giving"  Click="MenuItem_Click_1" Background="LightBlue"/>
+                    <MenuItem Header="Entertainment"  Click="MenuItem_Click_1" Background="LightSalmon"/>
+                </ContextMenu>
+            </DataGrid.ContextMenu>
+        </DataGrid>
+        <Grid Grid.Column="1" Grid.Row="1" Background="#272537">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Border Grid.Column="0" Grid.Row="0" Background="PaleTurquoise" CornerRadius="10" Margin="4,0,4,4">
+                <DockPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Label Content="House" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="20" FontWeight="Medium"/>
+                        <Label Content="{Binding House}" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="30" FontWeight="Bold" Grid.Row="1"/>
+                    </Grid>
+                </DockPanel>
+            </Border>
+            <Border Grid.Column="1" Grid.Row="0" Background="PaleGoldenrod" CornerRadius="10" Margin="4,0,4,4">
+                <DockPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Label Content="Transportation" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="20" FontWeight="Medium"/>
+                        <Label Content="{Binding Transportation}" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="30" FontWeight="Bold" Grid.Row="1"/>
+                    </Grid>
+                </DockPanel>
+            </Border>
+            <Border Grid.Column="2" Grid.Row="0" Background="PaleGreen" CornerRadius="10" Margin="4,0,4,4">
+                <DockPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Label Content="Food" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="20" FontWeight="Medium"/>
+                        <Label Content="{Binding Food}" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="30" FontWeight="Bold" Grid.Row="1"/>
+                    </Grid>
+                </DockPanel>
+            </Border>
+            <Border Grid.Column="3" Grid.Row="0" Background="PaleVioletRed" CornerRadius="10" Margin="4,0,4,4">
+                <DockPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Label Content="Utilities" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="20" FontWeight="Medium"/>
+                        <Label Content="{Binding Utilities}" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="30" FontWeight="Bold" Grid.Row="1"/>
+                    </Grid>
+                </DockPanel>
+            </Border>
+            <Border Grid.Column="4" Grid.Row="0" Background="LightCoral" CornerRadius="10" Margin="4,0,4,4">
+                <DockPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Label Content="Clothing" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="20" FontWeight="Medium"/>
+                        <Label Content="{Binding Clothing}" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="30" FontWeight="Bold" Grid.Row="1"/>
+                    </Grid>
+                </DockPanel>
+            </Border>
+            <Border Grid.Column="0" Grid.Row="1" Background="LightPink" CornerRadius="10" Margin="4,4,4,4">
+                <DockPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Label Content="Medical" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="20" FontWeight="Medium"/>
+                        <Label Content="{Binding Medical}" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="30" FontWeight="Bold" Grid.Row="1"/>
+                    </Grid>
+                </DockPanel>
+            </Border>
+            <Border Grid.Column="1" Grid.Row="1" Background="LightCyan" CornerRadius="10" Margin="4,4,4,4">
+                <DockPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Label Content="Insurance" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="20" FontWeight="Medium"/>
+                        <Label Content="{Binding Insurance}" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="30" FontWeight="Bold" Grid.Row="1"/>
+                    </Grid>
+                </DockPanel>
+            </Border>
+            <Border Grid.Column="2" Grid.Row="1" Background="LightGray" CornerRadius="10" Margin="4,4,4,4">
+                <DockPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Label Content="HouseSupplies" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="20" FontWeight="Medium"/>
+                        <Label Content="{Binding HouseSupplies}" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="30" FontWeight="Bold" Grid.Row="1"/>
+                    </Grid>
+                </DockPanel>
+            </Border>
+            <Border Grid.Column="3" Grid.Row="1" Background="LightSeaGreen" CornerRadius="10" Margin="4,4,4,4">
+                <DockPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Label Content="Personal" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="20" FontWeight="Medium"/>
+                        <Label Content="{Binding Personal}" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="30" FontWeight="Bold" Grid.Row="1"/>
+                    </Grid>
+                </DockPanel>
+            </Border>
+            <Border Grid.Column="4" Grid.Row="1" Background="LightGoldenrodYellow" CornerRadius="10" Margin="4,4,4,4">
+                <DockPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Label Content="Debt" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="20" FontWeight="Medium"/>
+                        <Label Content="{Binding Debt}" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="30" FontWeight="Bold" Grid.Row="1"/>
+                    </Grid>
+                </DockPanel>
+            </Border>
+            <Border Grid.Column="0" Grid.Row="2" Background="LightSteelBlue" CornerRadius="10" Margin="4,4,4,4">
+                <DockPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Label Content="Retirement" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="20" FontWeight="Medium"/>
+                        <Label Content="{Binding Retirement}" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="30" FontWeight="Bold" Grid.Row="1"/>
+                    </Grid>
+                </DockPanel>
+            </Border>
+            <Border Grid.Column="1" Grid.Row="2" Background="LightSlateGray" CornerRadius="10" Margin="4,4,4,4">
+                <DockPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Label Content="Education" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="20" FontWeight="Medium"/>
+                        <Label Content="{Binding Education}" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="30" FontWeight="Bold" Grid.Row="1"/>
+                    </Grid>
+                </DockPanel>
+            </Border>
+            <Border Grid.Column="2" Grid.Row="2" Background="LightSkyBlue" CornerRadius="10" Margin="4,4,4,4">
+                <DockPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Label Content="Savings" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="20" FontWeight="Medium"/>
+                        <Label Content="{Binding Savings}" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="30" FontWeight="Bold" Grid.Row="1"/>
+                    </Grid>
+                </DockPanel>
+            </Border>
+            <Border Grid.Column="3" Grid.Row="2" Background="LightBlue" CornerRadius="10" Margin="4,4,4,4">
+                <DockPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Label Content="Giving" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="20" FontWeight="Medium"/>
+                        <Label Content="{Binding Giving}" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="30" FontWeight="Bold" Grid.Row="1"/>
+                    </Grid>
+                </DockPanel>
+            </Border>
+            <Border Grid.Column="4" Grid.Row="2" Background="LightSalmon" CornerRadius="10" Margin="4,4,4,4">
+                <DockPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Label Content="Entertainment" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="20" FontWeight="Medium"/>
+                        <Label Content="{Binding Entertainment}" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="30" FontWeight="Bold" Grid.Row="1"/>
+                    </Grid>
+                </DockPanel>
+            </Border>
+        </Grid>
+    </Grid>
+    
+</Window>

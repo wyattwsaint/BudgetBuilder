@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+    <ApplicationIcon>clip-art-free-library-clip-art-symbols-green-dollar-sign-ico-11562974014gc5kca0drk.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="BSParser.db" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="BSParser.db">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="clip-art-free-library-clip-art-symbols-green-dollar-sign-ico-11562974014gc5kca0drk.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ControlzEx" Version="5.0.2" />
+    <PackageReference Include="Dapper" Version="2.0.123" />
+    <PackageReference Include="IronOcr" Version="2023.3.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.5" />
+    <PackageReference Include="System.Drawing.Common" Version="7.0.0" />
+  </ItemGroup>
+
+</Project>
