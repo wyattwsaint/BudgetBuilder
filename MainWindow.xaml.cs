@@ -68,6 +68,7 @@ namespace BudgetBuilder
                 var transaction = (BankTransaction)DataContext;
 
                 var progressBar = new BudgetBuilder.ProgressBar();
+
                 progressBar.Show();
                 await Task.Run(() =>
                 {

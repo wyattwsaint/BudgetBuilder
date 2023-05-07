@@ -140,8 +140,8 @@ namespace BudgetBuilder
             ClearCategoryTotals();
 
             var tags = SqliteDataAccess.Load();
-            
-            IronTesseract ocr = new IronTesseract();
+
+            var ocr = new IronTesseract();
             using (OcrInput input = new OcrInput())
             {
                 // We can also select specific PDF page numnbers to OCR
