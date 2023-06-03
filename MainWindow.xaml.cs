@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Transactions;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
-using System.Windows.Documents;
-using System.Windows.Media;
 
 namespace BudgetBuilder
 {
@@ -43,11 +37,11 @@ namespace BudgetBuilder
 
             var transaction = (BankTransaction)DataContext;
 
-            var updatedTransactionToAdd = transaction.Transactions.Where(t => t.Description == transactionLineItem.Description)
+            var updatedTransactionToAdd = transaction.Transactions!.Where(t => t.Description == transactionLineItem.Description)
                 .Select(t => new TransactionLineItem(t.Date, transactionLineItem.Description, t.Amount, category, transactionLineItem.Count)).First();
             var transactionToAdjustPreviousTotal = transactionLineItem with { Amount = -transactionLineItem.Amount };
 
-            transaction.Transactions.Remove(transactionLineItem);
+            transaction.Transactions!.Remove(transactionLineItem);
 
             transaction.Transactions.Add(updatedTransactionToAdd);
 

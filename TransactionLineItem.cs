@@ -3,7 +3,7 @@
 namespace BudgetBuilder
 {
     public record TransactionLineItem(
-        DateOnly Date,
+        DateOnly? Date,
         string Description,
         decimal Amount,
         string? Category,
