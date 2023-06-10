@@ -38,7 +38,7 @@ namespace BudgetBuilder
             var transaction = (BankTransaction)DataContext;
 
             var updatedTransactionToAdd = transaction.Transactions!.Where(t => t.Description == transactionLineItem.Description)
-                .Select(t => new TransactionLineItem(t.Date, transactionLineItem.Description, t.Amount, category, transactionLineItem.Count)).First();
+                .Select(t => new TransactionLineItem(transactionLineItem.Date, transactionLineItem.Description, transactionLineItem.Amount, category, transactionLineItem.Count)).First();
             var transactionToAdjustPreviousTotal = transactionLineItem with { Amount = -transactionLineItem.Amount };
 
             transaction.Transactions!.Remove(transactionLineItem);

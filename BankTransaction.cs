@@ -1,11 +1,7 @@
-﻿using Aspose.Words;
-using Azure;
-using Azure.AI.FormRecognizer.DocumentAnalysis;
-using Microsoft.Extensions.Azure;
+﻿using IronOcr;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
@@ -15,7 +11,6 @@ namespace BudgetBuilder
 {
     public class BankTransaction : INotifyPropertyChanged
     {
-
         protected void OnPropertyChanged([CallerMemberName] string? name = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
@@ -140,70 +135,48 @@ namespace BudgetBuilder
         }
 
 
-        public async void Parse(string? file)
+        public void Parse(string? file)
         {
             ClearCategoryTotals();
             var tags = SqliteDataAccess.Load();
             Transactions = new ObservableCollection<TransactionLineItem>();
             var transactionBuilder = new ObservableCollection<TransactionLineItem>();
 
-            string endpoint = "https://saintformrecognizer.cognitiveservices.azure.com/";
-            string apiKey = "2a3af3f8592749ad854f7200e38fc93f";
-            var credential = new AzureKeyCredential(apiKey);
-            var client = new DocumentAnalysisClient(new Uri(endpoint), credential);
-
-            FileStream fs = new FileStream(file, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-
             try
-            {
-                AnalyzeDocumentOperation operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-read", fs);
-                AnalyzeResult result = operation.Value;
-
-                var lineCount = 0;
-                var rawDataArray = result.Content.Split("\n");
-                foreach (var paragraph in rawDataArray)
+            { 
+            IronTesseract ocr = new IronTesseract();
+                using (OcrInput input = new OcrInput())
                 {
-                    var amountRegex = new Regex("[+-]?[0-9]{1,3}(?:,?[0-9]{3})*\\.[0-9]{2}$");
-                    var dateRegex = new Regex("^\\d\\d/\\d\\d$");
-                    var matches = amountRegex.Matches(paragraph);
-                    if (matches.Count == 1)
+                    // We can also select specific PDF page numnbers to OCR
+                    input.AddPdf(file);
+                    OcrResult result = ocr.Read(input);
+                    Console.WriteLine(result.Text);
+                    // 1 page for every page of the PDF
+                    Console.WriteLine($"{result.Pages.Count()} Pages");
+
+                    var lineCount = 0;
+                    var rawDataArray = result.Text.Split("\r");
+                    var transactionRegex = new Regex("^\\n\\d\\d/\\d\\d.+[+-]?[0-9]{1,3}(?:,?[0-9]{3})*\\.[0-9]{2} [+-]?[0-9]{1,3}(?:,?[0-9]{3})*\\.[0-9]{2}$");
+
+                    foreach (var paragraph in rawDataArray)
                     {
-                        var possibleParagraphParts = paragraph.Split(" ");
-                        if (possibleParagraphParts.Length > 1)
+                        if (transactionRegex.IsMatch(paragraph))
                         {
-                            if (amountRegex.IsMatch(possibleParagraphParts[^1]))
-                            {
-                                DateOnly.TryParse(rawDataArray[lineCount - 1], out var date);
-                                var description = string.Join(" ", possibleParagraphParts[1..^1]);
-                                var amount = decimal.Parse(possibleParagraphParts[^1]);
-                                
-                                transactionBuilder.Add(new TransactionLineItem(
-                                    date,
-                                    description,
-                                    amount,
-                                    Category: null,
-                                    lineCount));
-                                lineCount++;
-                                continue;
-                            }
-                        }
-                        else
-                        {
-                            DateOnly.TryParse(rawDataArray[lineCount - 2], out var date);
-                            var description = rawDataArray[lineCount - 1];
-                            var amount = decimal.Parse(paragraph);
+                            var transactionParts = paragraph.Split(" ");
+                            DateOnly.TryParse(transactionParts[0], out var date);
+                            var description = string.Join(" ", transactionParts[1..^2]);
+                            decimal.TryParse(transactionParts[^2], out var amount);
+                            var tag = tags.Where(t => t.Description == description).FirstOrDefault();
 
                             transactionBuilder.Add(new TransactionLineItem(
                                 date,
                                 description,
                                 amount,
-                                Category: null,
+                                tag.Category,
                                 lineCount));
-                            lineCount++;
-                            continue;
                         }
+                        lineCount++;
                     }
-                    lineCount++;
                 }
 
             }
