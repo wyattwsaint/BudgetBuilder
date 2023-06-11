@@ -28,92 +28,126 @@ namespace BudgetBuilder
         private decimal house;
         public decimal House
         {
-            get => house;
+            get => Math.Abs(house);
             set => Set(ref house, value);
         }
         private decimal transportation;
         public decimal Transportation
         {
-            get => transportation;
+            get => Math.Abs(transportation);
             set => Set(ref transportation, value);
         }
         private decimal food;
         public decimal Food
         {
-            get => food;
+            get => Math.Abs(food);
             set => Set(ref food, value);
         }
         private decimal utilities;
         public decimal Utilities
         {
-            get => utilities;
+            get => Math.Abs(utilities);
             set => Set(ref utilities, value);
         }
         private decimal clothing;
         public decimal Clothing
         {
-            get => clothing;
+            get => Math.Abs(clothing);
             set => Set(ref clothing, value);
         }
         private decimal medical;
         public decimal Medical
         {
-            get => medical;
+            get => Math.Abs(medical);
             set => Set(ref medical, value);
         }
         private decimal insurance;
         public decimal Insurance
         {
-            get => insurance;
+            get => Math.Abs(insurance);
             set => Set(ref insurance, value);
         }
         private decimal houseSupplies;
         public decimal HouseSupplies
         {
-            get => houseSupplies;
+            get => Math.Abs(houseSupplies);
             set => Set(ref houseSupplies, value);
         }
         private decimal personal;
         public decimal Personal
         {
-            get => personal;
+            get => Math.Abs(personal);
             set => Set(ref personal, value);
         }
         private decimal debt;
         public decimal Debt
         {
-            get => debt;
+            get => Math.Abs(debt);
             set => Set(ref debt, value);
         }
         private decimal retirement;
         public decimal Retirement
         {
-            get => retirement;
+            get => Math.Abs(retirement);
             set => Set(ref retirement, value);
         }
         private decimal education;
         public decimal Education
         {
-            get => education;
+            get => Math.Abs(education);
             set => Set(ref education, value);
         }
         private decimal savings;
         public decimal Savings
         {
-            get => savings;
+            get => Math.Abs(savings);
             set => Set(ref savings, value);
         }
         private decimal giving;
         public decimal Giving
         {
-            get => giving;
+            get => Math.Abs(giving);
             set => Set(ref giving, value);
         }
         private decimal entertainment;
         public decimal Entertainment
         {
-            get => entertainment;
+            get => Math.Abs(entertainment);
             set => Set(ref entertainment, value);
+        }
+
+        private decimal saved;
+        public decimal Saved
+        {
+            get
+            {
+                return (int)saved;
+            }
+
+            set => Set(ref saved, value);
+        }
+        private decimal spent;
+        public decimal Spent
+        {
+            get
+            {
+                return (int)spent;
+            }
+
+            set => Set(ref spent, value);
+        }
+        private decimal changed;
+        public decimal Changed
+        {
+            get => (int)changed;
+            set => Set(ref changed, value);
+        }
+
+        private bool isNetGain;
+        public bool IsNetGain
+        {
+            get => isNetGain;
+            set => Set(ref isNetGain, value);
         }
 
         public BankTransaction()
@@ -195,6 +229,18 @@ namespace BudgetBuilder
             {
                 if (item.Category is not null)
                 {
+                    Changed += item.Amount;
+                    if (Changed > 0) IsNetGain = true;
+                    switch (item.Amount)
+                    {
+                        case > 0:
+                            Saved += item.Amount;
+                            break;
+                        case < 0:
+                            Spent += item.Amount;
+                            break;
+                    }
+
                     switch (item.Category)
                     {
                         case "House":
@@ -264,6 +310,9 @@ namespace BudgetBuilder
             Savings = 0;
             Giving = 0;
             Entertainment = 0;
+            Saved = 0;
+            Spent = 0;
+            Changed = 0;
         }
     }
 }
