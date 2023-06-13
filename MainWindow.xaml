@@ -10,7 +10,7 @@
         WindowStartupLocation="CenterScreen"
         Title="Budget Builder"
         Closing="Window_Closing">
-        <Grid>
+    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="*"/>
@@ -38,21 +38,8 @@
                 <Label Grid.Column="1" Width="auto" Height="auto" Content ="{Binding Saved}" Foreground="Green" FontSize="50" Background="#272537"/>
                 <Label Grid.Column="2" Width="auto" Height="auto" Content="Spent:" HorizontalContentAlignment="Right" Foreground="White" FontSize="50" Background="#272537"/>
                 <Label Grid.Column="3" Width="auto" Height="auto" Content ="{Binding Spent}" Foreground="Red" FontSize="50" Background="#272537"/>
-                <Label Grid.Column="4" Width="auto" Height="auto" Content="Changed:" HorizontalContentAlignment="Right" Foreground="White" FontSize="50" Background="#272537"/>
-                <Label Grid.Column="5" Width="auto" Height="auto" Content ="{Binding Changed}" FontSize="50"  Background="#272537">
-                    <Label.Style>
-                        <Style TargetType="{x:Type Label}">
-                            <Setter Property="Content" Value="{Binding Path=IsNetGain}"/>
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding Path=IsNetGain}" Value="False">
-                                    <Setter Property="Foreground" Value="Purple"></Setter>
-                                    <Setter Property="Background" Value="Green"/>
-                                    <Setter Property="Content" Value="Free" />
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Label.Style>
-                </Label>
+                <Label Grid.Column="4" Width="auto" Height="auto" Content="Net:" HorizontalContentAlignment="Right" Foreground="White" FontSize="50" Background="#272537"/>
+                <Label Grid.Column="5" Width="auto" Height="auto" Content ="{Binding Changed}" FontSize="50" Foreground="LightGray" Background="#272537"/>
             </Grid>
         </Grid>
         <Label Grid.Column="0" Grid.Row="0" Width="auto" Height="auto" Background="#272537" Content="Budget Builder" Foreground="Honeydew"  FontSize="60" FontStyle="Oblique" FontFamily="Century Gothic"/>
